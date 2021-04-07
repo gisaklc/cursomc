@@ -1,5 +1,6 @@
 package com.gisaklc.cursomc.services;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,5 +25,6 @@ public class CategoriaService {
 		List<Categoria> lista = repo.findAll();
 		return lista;
 	}
+
 
 }
