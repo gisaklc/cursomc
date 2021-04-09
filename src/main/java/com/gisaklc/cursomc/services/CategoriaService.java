@@ -1,6 +1,5 @@
 package com.gisaklc.cursomc.services;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.gisaklc.cursomc.domain.Categoria;
 import com.gisaklc.cursomc.repositories.CategoriaRepository;
+import com.gisaklc.cursomc.services.exceptions.ObjectNotFound;
 
 @Service
 public class CategoriaService {
@@ -18,13 +18,13 @@ public class CategoriaService {
 
 	public Categoria find(Integer id) {
 		Optional<Categoria> obj = repo.findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(
+				() -> new ObjectNotFound("Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
 
 	public List<Categoria> findAll() {
 		List<Categoria> lista = repo.findAll();
 		return lista;
 	}
-
 
 }
