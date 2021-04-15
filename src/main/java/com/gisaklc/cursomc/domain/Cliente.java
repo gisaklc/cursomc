@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.gisaklc.cursomc.domain.enums.TipoCliente;
 
 @Entity
@@ -29,6 +30,7 @@ public class Cliente implements Serializable {
 	private String email;
 	private Integer tipoClienteEnum;
 
+	@JsonManagedReference // cliente pode serializar(trafegar) o endereco  1  *
 	@OneToMany(mappedBy = "cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
 
@@ -37,7 +39,7 @@ public class Cliente implements Serializable {
 	private Set<String> telefones = new HashSet<String>();// solução pq a tb tel so tem 1 atributo
 
 	public Cliente() {
- 
+
 	}
 
 	public Cliente(Integer id, String nome, String cpfOuCnpj, String email, TipoCliente tipoClienteEnum) {

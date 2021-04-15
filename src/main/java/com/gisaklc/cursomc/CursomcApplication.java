@@ -69,7 +69,6 @@ public class CursomcApplication implements CommandLineRunner {
 		// salva no banco
 
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
-
 		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
 
 		Estado e1 = new Estado(null, "Minas Gerais");
@@ -101,7 +100,6 @@ public class CursomcApplication implements CommandLineRunner {
 		cli1.getEnderecos().addAll(Arrays.asList(end1, end2));// adiciona os enderecos do cliente
 		
 		clienteRepository.saveAll(Arrays.asList(cli1));
-		
 		enderecoRepository.saveAll(Arrays.asList(end1, end2));
 		
 		
