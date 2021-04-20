@@ -2,6 +2,8 @@ package com.gisaklc.cursomc.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -14,7 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.core.sym.Name;
 @Entity
 public class Pedido  implements Serializable {
 	private static final long serialVersionUID = 1L; 
@@ -35,6 +36,10 @@ public class Pedido  implements Serializable {
 	@JoinColumn(name = "id_endereco_entrega")
 	private Endereco enderecoDeEntrega;
 
+	// pedido tem varios itens de pedidos
+	@OneToMany(mappedBy = "id.pedido")
+	private Set<ItemPedido> itensPedidos = new HashSet<ItemPedido>();
+	
 	public Pedido() {
 
 	}
@@ -110,6 +115,14 @@ public class Pedido  implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public Set<ItemPedido> getItensPedidos() {
+		return itensPedidos;
+	}
+
+	public void setItensPedidos(Set<ItemPedido> itensPedidos) {
+		this.itensPedidos = itensPedidos;
 	}
 
 }

@@ -1,6 +1,6 @@
 package com.gisaklc.cursomc;
 
-import java.text.SimpleDateFormat;
+import java.text.SimpleDateFormat;import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +13,7 @@ import com.gisaklc.cursomc.domain.Cidade;
 import com.gisaklc.cursomc.domain.Cliente;
 import com.gisaklc.cursomc.domain.Endereco;
 import com.gisaklc.cursomc.domain.Estado;
+import com.gisaklc.cursomc.domain.ItemPedido;
 import com.gisaklc.cursomc.domain.Pagamento;
 import com.gisaklc.cursomc.domain.PagamentoComBoleto;
 import com.gisaklc.cursomc.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.gisaklc.cursomc.repositories.CidadeRepository;
 import com.gisaklc.cursomc.repositories.ClienteRepository;
 import com.gisaklc.cursomc.repositories.EnderecoRepository;
 import com.gisaklc.cursomc.repositories.EstadoRepository;
+import com.gisaklc.cursomc.repositories.ItemPedidoRespository;
 import com.gisaklc.cursomc.repositories.PagamentoRespository;
 import com.gisaklc.cursomc.repositories.PedidoRepository;
 import com.gisaklc.cursomc.repositories.ProdutoRepository;
@@ -55,6 +57,9 @@ public class CursomcApplication implements CommandLineRunner {
 	
 	@Autowired
 	private PagamentoRespository pagamentoRepository;
+	
+	@Autowired
+	private ItemPedidoRespository itemPedidoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -135,6 +140,21 @@ public class CursomcApplication implements CommandLineRunner {
 		pedidoRepository.saveAll(Arrays.asList(pedido1, pedido2));
 		
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+		
+		
+		ItemPedido item1 = new ItemPedido(pedido1, p1, 0.00, 1, 300.00);
+		ItemPedido item2 = new ItemPedido(pedido1, p2, 0.00, 2, 80.00);
+		ItemPedido item3 = new ItemPedido(pedido2, p3, 0.00, 1, 30.00);
+		
+		pedido1.getItensPedidos().addAll(Arrays.asList(item1, item2)); //os pedidos conhecem os seus itens
+		pedido2.getItensPedidos().addAll(Arrays.asList(item3));
+		
+		p1.getItensPedidos().addAll(Arrays.asList(item1));// os produtos conhecem os seus itens
+		p2.getItensPedidos().addAll(Arrays.asList(item2));
+		p3.getItensPedidos().addAll(Arrays.asList(item3));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(item1, item2, item3));
+		
 	}
 
 }

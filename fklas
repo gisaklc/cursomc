@@ -1,0 +1,71 @@
+[33mcommit 247d45b7ffcea1a428ba0cd5674ddf948bf8c053[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Tue Apr 20 15:00:20 2021 -0300
+
+    criacao de entidade pagamento e pedido respository
+
+[33mcommit 321c6c6daccac6a0b9b6974fbd3080653828972b[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Thu Apr 15 00:50:59 2021 -0300
+
+    endpoint cliente
+
+[33mcommit 38737514f257dc14069a9438493c4e1808ab71ba[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Thu Apr 15 00:13:57 2021 -0300
+
+    mapeamento cliente telefone endereco
+
+[33mcommit de41426e17f5d1ae96c3fe9e32fdd96d0bf73a6b[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Fri Apr 9 16:11:21 2021 -0300
+
+    correcao estado
+
+[33mcommit e5cb1052dfa8d55a2a0f4084ed3aeae7cfa8b195[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Fri Apr 9 15:27:50 2021 -0300
+
+    criacao da classe exception
+
+[33mcommit 3d61717f1f284f85ab3c793d1c9383f487555f77[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Wed Apr 7 16:13:20 2021 -0300
+
+    associação muitos para muitos
+
+[33mcommit a729cb90e4ebc77538e8cef6ebb78c95aa2701fe[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Wed Apr 7 13:54:52 2021 -0300
+
+    implementacao do metodo save da class Application
+
+[33mcommit a5fda2815e56ccd6480a88041d376b36aa6859c5[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Wed Apr 7 13:21:40 2021 -0300
+
+    criação da camada de acesso a dados respository e servico
+
+[33mcommit 37724a8a31f7a76b522824ff203bca8e015d48c2[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Tue Apr 6 19:36:05 2021 -0300
+
+    Mapeamento e Bd H2
+
+[33mcommit 70efaf8c8be98575c9a6d6b33ea5fc079f37a1d8[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Tue Apr 6 16:42:21 2021 -0300
+
+    Lista Categoria Rest
+
+[33mcommit 2a9e966976507fa6eacfa2bc20d61c36fb256883[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Tue Apr 6 16:21:08 2021 -0300
+
+    Testando Rest
+
+[33mcommit 801f0d25c567fe7c7a03c64aa198e7ff32e6af25[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Tue Apr 6 15:31:27 2021 -0300
+
+    Projeto criado!
