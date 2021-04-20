@@ -1,6 +1,6 @@
 package com.gisaklc.cursomc;
 
-import java.text.SimpleDateFormat;import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
