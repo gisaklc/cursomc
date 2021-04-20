@@ -12,11 +12,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gisaklc.cursomc.domain.enums.TipoCliente;
 
 @Entity
@@ -31,7 +29,6 @@ public class Cliente implements Serializable {
 	private String email;
 	private Integer tipoClienteEnum;
 
-	@JsonManagedReference // cliente pode serializar(trafegar) o endereco 1 *
 	@OneToMany(mappedBy = "cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
 
@@ -39,7 +36,7 @@ public class Cliente implements Serializable {
 	@CollectionTable(name = "TELEFONE")
 	private Set<String> telefones = new HashSet<String>();// solução pq a tb tel so tem 1 atributo
 
-	@JsonBackReference
+	@JsonIgnore  // referencia ciclica nao pode ser serializado
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
 
