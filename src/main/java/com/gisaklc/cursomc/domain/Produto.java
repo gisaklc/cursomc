@@ -35,7 +35,7 @@ public class Produto implements Serializable {
 	private List<Categoria> categorias = new ArrayList<>();
 
 	// produto tbm conhece os itens associados a ele
-	@JsonIgnore // o importante é a partir do item de pedido tem o acesso ao produto
+	@JsonIgnore // referencia ciclica nao pode ser serializado
 	@OneToMany(mappedBy = "id.produto")
 	private Set<ItemPedido> itensPedidos = new HashSet<>();
 

@@ -1,13 +1,15 @@
 package com.gisaklc.cursomc.resource;
 
-import java.util.List;
+import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.gisaklc.cursomc.domain.Categoria;
 import com.gisaklc.cursomc.services.CategoriaService;
@@ -22,16 +24,19 @@ public class CategoriaResource {
 	private CategoriaService service;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	
 	public ResponseEntity<?> find(@PathVariable Integer id) throws ObjectNotFoundException {
 		Categoria categoria = service.find(id);
 		return ResponseEntity.ok().body(categoria);
 
 	}
 
-	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<?> findAll(@PathVariable Integer id) {
-		List<Categoria> categorias = service.findAll();
-		return ResponseEntity.ok().body(categorias);
+
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<Void> insert(@RequestBody Categoria obj) {
+		obj = service.save(obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(uri).build();
 
 	}
 

@@ -27,4 +27,8 @@ public class CategoriaService {
 		return lista;
 	}
 
+	public Categoria save(Categoria categoria) {
+		categoria.setId(null); // para nao ser update
+		return repo.save(categoria);
+	}
 }

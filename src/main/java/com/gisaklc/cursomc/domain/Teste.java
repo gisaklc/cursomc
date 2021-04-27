@@ -1,38 +1,117 @@
 package com.gisaklc.cursomc.domain;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
+import java.util.Map;
+import java.util.Scanner;
 import java.util.Set;
-import java.util.TreeSet;
 
-public class Teste implements Iterable<String> {
+public class Teste {
+
 	private static Set<String> telefones = new HashSet<String>();
 
-	private static void adicionar() {
-		telefones.add("Bruno");
-		telefones.add("Adrien");
+	public static void main(String[] args) throws IOException, InterruptedException {
 
-		Set<String> ordena = new TreeSet<String>(telefones);
+//		Retangulo r = new Retangulo();
+//		double p = r.getPerimetro();
+//		double a = r.getArea();
+//
+//		System.out.println("Area: " + a);
+//		System.out.println("Perimeter: " + p);
+		//calcularTotal();
+		
+		
+	     //  Scanner scanner = new Scanner(System.in);
 
-		Iterator<String> it = telefones.iterator();
+	      //  System.out.print("Digite o cep de pesquisa: ");
+	      //  String cep = scanner.nextLine();
 
-		while (it.hasNext()) {
-			String telefone = it.next();
-			System.out.println(telefone);
+	        getCep("");
+		
+	}
+
+	private static double calcularTotal() {
+		String[][] arr = new String[][] { { "Molho de Tomate", "1.70" }, { "Filet Mignon", "39.90" },
+				{ "Queijo Mussarela", "9.90" }, { "Farinha de Rosca", "4.90" }, { "Caixa de Ovos", "7.90" } };
+		double total = 0;
+
+		for (String[] i : arr) {
+			int index = 0;
+			for (String j : i) {
+				if (index == 1) {
+					double valor = Double.valueOf(j);
+					total += valor;
+				}
+				index++;
+			}
 		}
+		System.out.print(total);
+
+//		for (int col = 0; col < arr[0].length; col++) {
+//			for (int row = 0; row < arr.length; row++) {
+//				if (col == 1) {
+//					double valor = Double.valueOf(arr[row][col]);
+//					total += valor;
+//				} else {
+//					break;
+//				}
+//			}
+//
+//		}
+
+		return total;
 
 	}
 
-	public static void main(String[] args) {
+	private void buscarCidade() {
 
-		adicionar();
+		Map<String, Integer> cidades = new HashMap<String, Integer>();
 
+		cidades.put("São Paulo", 123363521);
+		cidades.put("Campinas", 2615322);
+		cidades.put("Belo Horizonte", 2722369);
+		cidades.put("Rio de Janeiro", 6748321);
+		cidades.put("Salvador", 2886698);
+
+		for (String key : cidades.keySet()) {
+			if (key.equals("Salvador")) {
+				Integer value = cidades.get(key);
+				System.out.println(key + " = " + value);
+			}
+		}
 	}
+	
+	private static void getCep(String cep) throws IOException, InterruptedException {
+//        HttpClient client = HttpClient.newHttpClient();
+//
+//        HttpRequest request = HttpRequest.newBuilder()
+//                .uri(URI.create("https://viacep.com.br/ws/" + cep + "/json/"))
+//                .build();
+//
+//        HttpResponse<String> response = client.send(request,
+//                HttpResponse.BodyHandlers.ofString());
+//
+//        System.out.println(response.body());
+        
+        
+        
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+              .uri(URI.create("https://uniciv.myedools.com/" + "/json/"))
+              .build();
+        client.sendAsync(request, BodyHandlers.ofString())
+              .thenApply(HttpResponse::body)
+              .thenAccept(System.out::println)
+              .join();
+        
 
-	@Override
-	public Iterator<String> iterator() {
-		// TODO Auto-generated method stub
-		return telefones.iterator();
-	}
+        
+    }
 
 }
