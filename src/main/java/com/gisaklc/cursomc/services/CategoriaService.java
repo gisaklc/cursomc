@@ -24,11 +24,6 @@ public class CategoriaService {
 				() -> new ObjectNotFound("Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
 
-	public List<Categoria> findAll() {
-		List<Categoria> lista = repo.findAll();
-		return lista;
-	}
-
 	public Categoria save(Categoria categoria) {
 		categoria.setId(null); // para nao ser update
 		return repo.save(categoria);
@@ -46,6 +41,11 @@ public class CategoriaService {
 		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possivel deletar uma categoria que possui produtos");
 		}
-
 	}
+
+	public List<Categoria> findAll() {
+		List<Categoria> lista = repo.findAll();
+		return lista;
+	}
+
 }

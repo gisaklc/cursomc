@@ -1,6 +1,8 @@
 package com.gisaklc.cursomc.resource;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.gisaklc.cursomc.domain.Categoria;
+import com.gisaklc.cursomc.dto.CategoriaDTO;
 import com.gisaklc.cursomc.services.CategoriaService;
 
 import javassist.tools.rmi.ObjectNotFoundException;
@@ -24,7 +27,6 @@ public class CategoriaResource {
 	private CategoriaService service;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-
 	public ResponseEntity<Categoria> find(@PathVariable Integer id) throws ObjectNotFoundException {
 		Categoria categoria = service.find(id);
 		return ResponseEntity.ok().body(categoria);
@@ -51,6 +53,17 @@ public class CategoriaResource {
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
+
+	}
+
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<CategoriaDTO>> findAll() {
+		// o dto contem apenas os dados q queremos, neste caso, os produtos desta categoria nao sao apresentados
+		List<Categoria> list = service.findAll();
+		
+		List<CategoriaDTO> listDto = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		//converte uma lista pela outra
+		return ResponseEntity.ok().body(listDto);
 
 	}
 
