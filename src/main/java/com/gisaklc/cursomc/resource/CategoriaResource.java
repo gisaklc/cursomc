@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -58,13 +60,30 @@ public class CategoriaResource {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<CategoriaDTO>> findAll() {
-		// o dto contem apenas os dados q queremos, neste caso, os produtos desta categoria nao sao apresentados
+		// o dto contem apenas os dados q queremos, neste caso, os produtos desta
+		// categoria nao sao apresentados
 		List<Categoria> list = service.findAll();
-		
+
 		List<CategoriaDTO> listDto = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
-		//converte uma lista pela outra
+		// converte uma lista pela outra
 		return ResponseEntity.ok().body(listDto);
 
 	}
 
+	@RequestMapping(value="page", method = RequestMethod.GET)
+	public ResponseEntity<Page<?>> findAll(
+			@RequestParam (value="page", defaultValue = "0") Integer page,
+			@RequestParam (value="linesForPage", defaultValue = "24") Integer linesForPage, 
+			@RequestParam (value="orderBy", defaultValue = "nome") String orderBy,
+			@RequestParam (value="direction", defaultValue = "ASC") String direction) {
+
+		Page<Categoria> listCategoriaPaged = service.findPage(page, linesForPage, orderBy, direction);
+		//converte para uma CategoriaDTO
+		Page<CategoriaDTO> listDtoPaged = listCategoriaPaged.map(obj -> new CategoriaDTO(obj));
+		return ResponseEntity.ok().body(listDtoPaged);
+
+	}
+
+	
+	
 }
