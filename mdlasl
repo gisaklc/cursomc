@@ -1,0 +1,119 @@
+[33mcommit bd3a8d4521b49129e34b5a1320ba9c0ce59324ab[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Thu Apr 29 11:01:48 2021 -0300
+
+    Paginacao com a categoria
+
+[33mcommit ae53df25b055e3d2dae2e6ad1e785f25d380a8f4[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Wed Apr 28 17:21:11 2021 -0300
+
+    listando todas as categorias com dto
+
+[33mcommit fe35ae4cf43d1b6f08910beb93e47a309487ea03[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Wed Apr 28 16:55:59 2021 -0300
+
+    delete categoria com tratamento de erro
+
+[33mcommit 8cb02db4110f1270559e88654ea4e6fd0e1f8ff6[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Wed Apr 28 13:50:07 2021 -0300
+
+    update caterogia
+
+[33mcommit 45cda1e8b128da9b19a061dfb7154f2211aed205[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Tue Apr 27 18:30:42 2021 -0300
+
+    insert categoria
+
+[33mcommit 08daa7faf19981621986ebde6c683d3269e5af85[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Tue Apr 20 19:44:02 2021 -0300
+
+    trocar o JasonBackReference para JsonIgnore
+
+[33mcommit 669275dfe539435c64d5bb9fb4da29fdd2cc8a65[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Tue Apr 20 19:36:40 2021 -0300
+
+    criacao do endpoint pedidos
+
+[33mcommit 68f5d9efb1d2536e6297313b59f7f2f553b9091a[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Tue Apr 20 18:06:53 2021 -0300
+
+    itemPedido mapeamento
+
+[33mcommit 247d45b7ffcea1a428ba0cd5674ddf948bf8c053[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Tue Apr 20 15:00:20 2021 -0300
+
+    criacao de entidade pagamento e pedido respository
+
+[33mcommit 321c6c6daccac6a0b9b6974fbd3080653828972b[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Thu Apr 15 00:50:59 2021 -0300
+
+    endpoint cliente
+
+[33mcommit 38737514f257dc14069a9438493c4e1808ab71ba[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Thu Apr 15 00:13:57 2021 -0300
+
+    mapeamento cliente telefone endereco
+
+[33mcommit de41426e17f5d1ae96c3fe9e32fdd96d0bf73a6b[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Fri Apr 9 16:11:21 2021 -0300
+
+    correcao estado
+
+[33mcommit e5cb1052dfa8d55a2a0f4084ed3aeae7cfa8b195[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Fri Apr 9 15:27:50 2021 -0300
+
+    criacao da classe exception
+
+[33mcommit 3d61717f1f284f85ab3c793d1c9383f487555f77[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Wed Apr 7 16:13:20 2021 -0300
+
+    associação muitos para muitos
+
+[33mcommit a729cb90e4ebc77538e8cef6ebb78c95aa2701fe[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Wed Apr 7 13:54:52 2021 -0300
+
+    implementacao do metodo save da class Application
+
+[33mcommit a5fda2815e56ccd6480a88041d376b36aa6859c5[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Wed Apr 7 13:21:40 2021 -0300
+
+    criação da camada de acesso a dados respository e servico
+
+[33mcommit 37724a8a31f7a76b522824ff203bca8e015d48c2[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Tue Apr 6 19:36:05 2021 -0300
+
+    Mapeamento e Bd H2
+
+[33mcommit 70efaf8c8be98575c9a6d6b33ea5fc079f37a1d8[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Tue Apr 6 16:42:21 2021 -0300
+
+    Lista Categoria Rest
+
+[33mcommit 2a9e966976507fa6eacfa2bc20d61c36fb256883[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Tue Apr 6 16:21:08 2021 -0300
+
+    Testando Rest
+
+[33mcommit 801f0d25c567fe7c7a03c64aa198e7ff32e6af25[m
+Author: Gisele Dias <gisaklc@hotmail.com>
+Date:   Tue Apr 6 15:31:27 2021 -0300
+
+    Projeto criado!

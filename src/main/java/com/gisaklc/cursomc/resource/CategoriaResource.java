@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +38,8 @@ public class CategoriaResource {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody Categoria obj) {
+	public ResponseEntity<Void> insert(@RequestBody @Valid CategoriaDTO objDto) {
+		Categoria obj = service.fromCategoriaDTO(objDto); // convete o CategoriaDTO para Categoria
 		obj = service.save(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
@@ -70,20 +73,17 @@ public class CategoriaResource {
 
 	}
 
-	@RequestMapping(value="page", method = RequestMethod.GET)
-	public ResponseEntity<Page<?>> findAll(
-			@RequestParam (value="page", defaultValue = "0") Integer page,
-			@RequestParam (value="linesForPage", defaultValue = "24") Integer linesForPage, 
-			@RequestParam (value="orderBy", defaultValue = "nome") String orderBy,
-			@RequestParam (value="direction", defaultValue = "ASC") String direction) {
+	@RequestMapping(value = "page", method = RequestMethod.GET)
+	public ResponseEntity<Page<?>> findAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@RequestParam(value = "linesForPage", defaultValue = "24") Integer linesForPage,
+			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy,
+			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
 
 		Page<Categoria> listCategoriaPaged = service.findPage(page, linesForPage, orderBy, direction);
-		//converte para uma CategoriaDTO
+		// converte para uma CategoriaDTO
 		Page<CategoriaDTO> listDtoPaged = listCategoriaPaged.map(obj -> new CategoriaDTO(obj));
 		return ResponseEntity.ok().body(listDtoPaged);
 
 	}
 
-	
-	
 }
