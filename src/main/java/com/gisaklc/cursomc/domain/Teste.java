@@ -6,10 +6,10 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.Set;
 
 public class Teste {
@@ -32,11 +32,25 @@ public class Teste {
 	      //  System.out.print("Digite o cep de pesquisa: ");
 	      //  String cep = scanner.nextLine();
 
-	        getCep("");
+	     //   getCep("");
 		
+			//int[][] matriz = {{1, 2, 3, 4, 5, 6}, {8, 10, 12, 14}};
+			//Arrays.asList(matriz).forEach((i) -> { System.out.println(i.toString()); });
+			
+			String[][] arr = new String[][] { { "Molho de Tomate", "1.70" }, { "Filet Mignon", "39.90" },
+				{ "Queijo Mussarela", "9.90" }, { "Farinha de Rosca", "4.90" }, { "Caixa de Ovos", "7.90" } };
+
+			
+				String[][] str2DArray = new String[][]{ {"John", "Bravo"} , {"Mary", "Lee"}, {"Bob", "Johnson"} };
+
+			    //Prior to Java 8
+			  //  System.out.println(Arrays.deepToString(arr));
+			    Arrays.stream(arr).flatMap(x -> Arrays.stream(x)).forEach(System.out::println);
+			
 	}
 
 	private static double calcularTotal() {
+		
 		String[][] arr = new String[][] { { "Molho de Tomate", "1.70" }, { "Filet Mignon", "39.90" },
 				{ "Queijo Mussarela", "9.90" }, { "Farinha de Rosca", "4.90" }, { "Caixa de Ovos", "7.90" } };
 		double total = 0;
@@ -52,7 +66,8 @@ public class Teste {
 			}
 		}
 		System.out.print(total);
-
+		
+		
 //		for (int col = 0; col < arr[0].length; col++) {
 //			for (int row = 0; row < arr.length; row++) {
 //				if (col == 1) {
