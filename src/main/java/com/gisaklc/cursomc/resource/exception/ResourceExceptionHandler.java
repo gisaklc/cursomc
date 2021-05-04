@@ -1,7 +1,5 @@
 package com.gisaklc.cursomc.resource.exception;
 
-import java.util.Iterator;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
