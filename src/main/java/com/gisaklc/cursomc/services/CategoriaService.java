@@ -28,7 +28,7 @@ public class CategoriaService {
 				() -> new ObjectNotFound("Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
 
-	public Categoria save(Categoria categoria) {
+	public Categoria insert(Categoria categoria) {
 		categoria.setId(null); // para nao ser update
 		return repo.save(categoria);
 	}
@@ -64,8 +64,6 @@ public class CategoriaService {
 	}
 
 	public Categoria fromCategoriaDTO(CategoriaDTO obj) {
-
 		return new Categoria(obj.getId(), obj.getNome());
-
 	}
 }

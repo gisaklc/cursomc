@@ -1,7 +1,10 @@
 package com.gisaklc.cursomc.services;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -10,9 +13,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.gisaklc.cursomc.domain.Cidade;
 import com.gisaklc.cursomc.domain.Cliente;
+import com.gisaklc.cursomc.domain.Endereco;
+import com.gisaklc.cursomc.domain.enums.TipoCliente;
 import com.gisaklc.cursomc.dto.ClienteDTO;
+import com.gisaklc.cursomc.dto.ClienteNewDTO;
+import com.gisaklc.cursomc.repositories.CidadeRepository;
 import com.gisaklc.cursomc.repositories.ClienteRepository;
+import com.gisaklc.cursomc.repositories.EnderecoRepository;
 import com.gisaklc.cursomc.services.exceptions.DataIntegrityException;
 import com.gisaklc.cursomc.services.exceptions.ObjectNotFound;
 
@@ -22,10 +31,24 @@ public class ClienteService {
 	@Autowired
 	private ClienteRepository repo;
 
+	@Autowired
+	private CidadeRepository repoCidade;
+
+	@Autowired
+	private EnderecoRepository repoEndereco;
+
 	public Cliente find(Integer id) {
 		Optional<Cliente> obj = repo.findById(id);
 		return obj.orElseThrow(
 				() -> new ObjectNotFound("Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
+	}
+
+	@Transactional
+	public Cliente insert(Cliente cliente) {
+		cliente.setId(null); // para nao ser update
+		cliente = repo.save(cliente);
+		repoEndereco.saveAll(cliente.getEnderecos());// salva a lista de endereco do cliente
+		return cliente;
 	}
 
 	public Cliente update(Cliente obj) {
@@ -60,8 +83,36 @@ public class ClienteService {
 
 	}
 
-	public Cliente fromClienteDTO(ClienteDTO obj) {
+	public Cliente fromDTO(ClienteDTO obj) {
 		return new Cliente(obj.getId(), obj.getNome(), obj.getEmail(), null, null);
 	}
 
+	public Cliente fromDTO(ClienteNewDTO obj) {
+		// monta o cliente
+		Cliente cli = new Cliente(null, obj.getNome(), obj.getEmail(), obj.getCpfOuCnpj(),
+				TipoCliente.toEnum(obj.getTipoClienteEnum()));
+
+		Optional<Cidade> cidade = repoCidade.findById(obj.getCidadeId());
+
+		Endereco end = new Endereco(null, obj.getLogradouro(), obj.getNumero(), obj.getComplemento(), obj.getBairro(),
+				obj.getCep(), cli, cidade.get());
+
+		Endereco end2 = new Endereco(null, "Rua dos Anjos", "2", obj.getComplemento(), obj.getBairro(),
+				obj.getCep(), cli, cidade.get());
+		
+		cli.getEnderecos().addAll(Arrays.asList(end, end2));
+
+		cli.getTelefones().add(obj.getTelefone1());
+
+		if (obj.getTelefone2() != null) {
+
+			cli.getTelefones().add(obj.getTelefone2());
+		}
+
+		if (obj.getTelefone3() != null) {
+
+			cli.getTelefones().add(obj.getTelefone3());
+		}
+		return cli;
+	}
 }
