@@ -2,24 +2,48 @@ package com.gisaklc.cursomc.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+import com.gisaklc.cursomc.services.validation.ClienteInsert;
+
+@ClienteInsert
 public class ClienteNewDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
+	
+	@NotEmpty(message = "Nome é obrigatório")
+	@Size(min = 5, max = 120, message = "O nome deve conter entre  5 e 120 caracteres ")
 	private String nome;
+	
 	private String cpfOuCnpj;
+	
+	@NotEmpty(message = "Email é obrigatório")
+	@Email(message = "Email inválido")
 	private String email;
+
 	private Integer tipoClienteEnum;
 
+	@NotEmpty(message = "Logradouro é obrigatório")
 	private String logradouro;
+	
+	@NotEmpty(message = "Numero é obrigatório")
 	private String numero;
+	
 	private String complemento;
-	private String bairro;
-	private String cep;
 
+	private String bairro;
+	
+	@NotEmpty(message = "Cep é obrigatório")
+	private String cep;
+	
+	@NotEmpty(message = "Telefone1 é obrigatório")
 	private String telefone1;
+	
 	private String telefone2;
+	
 	private String telefone3;
 
 	private Integer cidadeId;
