@@ -7,7 +7,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 import com.gisaklc.cursomc.domain.Cliente;
+import com.gisaklc.cursomc.services.validation.ClienteUpdate;
 
+@ClienteUpdate
 public class ClienteDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -22,6 +24,7 @@ public class ClienteDTO implements Serializable {
 	@Email(message = "Email inválido")
 	private String email;
 
+	
 	public ClienteDTO() {
 	}
 
@@ -55,4 +58,6 @@ public class ClienteDTO implements Serializable {
 		this.email = email;
 	}
 
+	
+	
 }
