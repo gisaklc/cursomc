@@ -33,6 +33,10 @@ public class ItemPedido implements Serializable {
 		this.preco = preco;
 	}
 
+	public double getSubtotal() {
+		return (preco - desconto) * quantidade;
+	}
+
 	public ItemPedidoPk getId() {
 		return id;
 	}
@@ -69,6 +73,7 @@ public class ItemPedido implements Serializable {
 	public Pedido getPedido() {
 		return id.getPedido();
 	}
+
 	// tudo q começa com get ele tem q serializar, neste caso nao pode
 	@JsonIgnore
 	public Produto getProduto() {

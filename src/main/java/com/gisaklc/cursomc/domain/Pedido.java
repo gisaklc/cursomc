@@ -3,6 +3,7 @@ package com.gisaklc.cursomc.domain;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -14,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import org.hibernate.query.criteria.internal.expression.function.AggregationFunction.SUM;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -52,6 +55,15 @@ public class Pedido implements Serializable {
 		this.instanteDate = instanteDate;
 		this.cliente = cliente;
 		this.enderecoDeEntrega = enderecoDeEntrega;
+	}
+
+	public double getTotalPedido() {
+//		double soma = 0;
+//		for (ItemPedido itemPedido : itensPedidos) {
+//			soma = soma + itemPedido.getSubtotal();
+//		}
+		return itensPedidos.stream().mapToDouble(produto -> produto.getSubtotal()).sum();
+
 	}
 
 	public Integer getId() {
