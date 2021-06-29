@@ -37,13 +37,14 @@ public class Produto implements Serializable {
 	// produto tbm conhece os itens associados a ele
 	@JsonIgnore // referencia ciclica nao pode ser serializado
 	@OneToMany(mappedBy = "id.produto")
-	private Set<ItemPedido> itensPedidos = new HashSet<>();
+	private Set<ItemPedido> itens = new HashSet<>();
 
 	public Produto() {
 
 	}
 
 	public Produto(Integer id, String nome, double preco) {
+		super();
 		this.id = id;
 		this.nome = nome;
 		this.preco = preco;
@@ -53,7 +54,7 @@ public class Produto implements Serializable {
 	@JsonIgnore // pra nao serializar
 	public List<Pedido> getPedidos() {
 		List<Pedido> lista = new ArrayList<>();
-		for (ItemPedido p : itensPedidos) {
+		for (ItemPedido p : itens) {
 			lista.add(p.getPedido());
 		}
 		return lista;
@@ -92,12 +93,12 @@ public class Produto implements Serializable {
 
 	}
 
-	public Set<ItemPedido> getItensPedidos() {
-		return itensPedidos;
+	public Set<ItemPedido> getItens() {
+		return itens;
 	}
 
-	public void setItensPedidos(Set<ItemPedido> itensPedidos) {
-		this.itensPedidos = itensPedidos;
+	public void setItens(Set<ItemPedido> itens) {
+		this.itens = itens;
 	}
 
 	@Override

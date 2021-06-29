@@ -3,9 +3,7 @@ package com.gisaklc.cursomc.domain;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,57 +13,53 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-
-import org.hibernate.query.criteria.internal.expression.function.AggregationFunction.SUM;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 @Entity
 public class Pedido implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-
-	@JsonFormat(pattern = "dd/MM/yyyy hh:mm")
-	private Date instanteDate;
-
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
+	
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
+	private Date instante;
+	
+	@OneToOne(cascade=CascadeType.ALL, mappedBy="pedido")
 	private Pagamento pagamento;
-
+	
 	@ManyToOne
-	@JoinColumn(name = "id_cliente")
+	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
-
+	
 	@ManyToOne
-	@JoinColumn(name = "id_endereco_entrega")
+	@JoinColumn(name="endereco_de_entrega_id")
 	private Endereco enderecoDeEntrega;
-
-	@OneToMany(mappedBy = "id.pedido")
-	private Set<ItemPedido> itensPedidos = new HashSet<>();
-
+	
+	@OneToMany(mappedBy="id.pedido")
+	private Set<ItemPedido> itens = new HashSet<>();
+	
 	public Pedido() {
-
 	}
 
-	public Pedido(Integer id, Date instanteDate, Cliente cliente, Endereco enderecoDeEntrega) {
+	public Pedido(Integer id, Date instante, Cliente cliente, Endereco enderecoDeEntrega) {
 		super();
 		this.id = id;
-		this.instanteDate = instanteDate;
+		this.instante = instante;
 		this.cliente = cliente;
 		this.enderecoDeEntrega = enderecoDeEntrega;
 	}
 
-	public double getTotalPedido() {
-//		double soma = 0;
-//		for (ItemPedido itemPedido : itensPedidos) {
-//			soma = soma + itemPedido.getSubtotal();
-//		}
-		return itensPedidos.stream().mapToDouble(produto -> produto.getSubtotal()).sum();
-
+	public double getValorTotal() {
+		double soma = 0.0;
+		for (ItemPedido ip : itens) {
+			soma = soma + ip.getSubtotal();
+		}
+		return soma;
 	}
-
+	
 	public Integer getId() {
 		return id;
 	}
@@ -74,12 +68,12 @@ public class Pedido implements Serializable {
 		this.id = id;
 	}
 
-	public Date getInstanteDate() {
-		return instanteDate;
+	public Date getInstante() {
+		return instante;
 	}
 
-	public void setInstanteDate(Date instanteDate) {
-		this.instanteDate = instanteDate;
+	public void setInstante(Date instante) {
+		this.instante = instante;
 	}
 
 	public Pagamento getPagamento() {
@@ -106,6 +100,14 @@ public class Pedido implements Serializable {
 		this.enderecoDeEntrega = enderecoDeEntrega;
 	}
 
+	public Set<ItemPedido> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<ItemPedido> itens) {
+		this.itens = itens;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -130,13 +132,6 @@ public class Pedido implements Serializable {
 			return false;
 		return true;
 	}
-
-	public Set<ItemPedido> getItensPedidos() {
-		return itensPedidos;
-	}
-
-	public void setItensPedidos(Set<ItemPedido> itensPedidos) {
-		this.itensPedidos = itensPedidos;
-	}
+	
 
 }

@@ -6,11 +6,17 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
-import java.util.Arrays;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Teste {
 
@@ -24,33 +30,37 @@ public class Teste {
 //
 //		System.out.println("Area: " + a);
 //		System.out.println("Perimeter: " + p);
-		//calcularTotal();
-		
-		
-	     //  Scanner scanner = new Scanner(System.in);
+		// calcularTotal();
 
-	      //  System.out.print("Digite o cep de pesquisa: ");
-	      //  String cep = scanner.nextLine();
+		// Scanner scanner = new Scanner(System.in);
 
-	     //   getCep("");
-		
-			//int[][] matriz = {{1, 2, 3, 4, 5, 6}, {8, 10, 12, 14}};
-			//Arrays.asList(matriz).forEach((i) -> { System.out.println(i.toString()); });
-			
-			String[][] arr = new String[][] { { "Molho de Tomate", "1.70" }, { "Filet Mignon", "39.90" },
-				{ "Queijo Mussarela", "9.90" }, { "Farinha de Rosca", "4.90" }, { "Caixa de Ovos", "7.90" } };
+		// System.out.print("Digite o cep de pesquisa: ");
+		// String cep = scanner.nextLine();
 
-			
-				String[][] str2DArray = new String[][]{ {"John", "Bravo"} , {"Mary", "Lee"}, {"Bob", "Johnson"} };
+		// getCep("");
 
-			    //Prior to Java 8
-			  //  System.out.println(Arrays.deepToString(arr));
-			    Arrays.stream(arr).flatMap(x -> Arrays.stream(x)).forEach(System.out::println);
-			
+		// int[][] matriz = {{1, 2, 3, 4, 5, 6}, {8, 10, 12, 14}};
+		// Arrays.asList(matriz).forEach((i) -> { System.out.println(i.toString()); });
+
+		// String[][] arr = new String[][] { { "Molho de Tomate", "1.70" }, { "Filet
+		// Mignon", "39.90" },
+		// { "Queijo Mussarela", "9.90" }, { "Farinha de Rosca", "4.90" }, { "Caixa de
+		// Ovos", "7.90" } };
+
+		// String[][] str2DArray = new String[][] { { "John", "Bravo" }, { "Mary", "Lee"
+		// }, { "Bob", "Johnson" } };
+
+		// Prior to Java 8
+		// System.out.println(Arrays.deepToString(arr));
+		// Arrays.stream(arr).flatMap(x ->
+		// Arrays.stream(x)).forEach(System.out::println);
+
+		lerArquivo();
+
 	}
 
 	private static double calcularTotal() {
-		
+
 		String[][] arr = new String[][] { { "Molho de Tomate", "1.70" }, { "Filet Mignon", "39.90" },
 				{ "Queijo Mussarela", "9.90" }, { "Farinha de Rosca", "4.90" }, { "Caixa de Ovos", "7.90" } };
 		double total = 0;
@@ -66,8 +76,7 @@ public class Teste {
 			}
 		}
 		System.out.print(total);
-		
-		
+
 //		for (int col = 0; col < arr[0].length; col++) {
 //			for (int row = 0; row < arr.length; row++) {
 //				if (col == 1) {
@@ -101,7 +110,23 @@ public class Teste {
 			}
 		}
 	}
+
+	private static void lerArquivo() throws IOException {
+		
+		Path path = Paths.get("file.txt");
+
+		// Files.lines(path).forEach(System.out::println);
 	
+		Stream<String> linhas = Files.lines(path);
+		// lmabda cconta a quantidade de linhas para cada string
+		Map<String, Long> result = linhas
+				.collect(Collectors.groupingBy(Function.identity(),
+		                Collectors.counting()));
+		
+		System.out.println(result);
+
+	}
+
 	private static void getCep(String cep) throws IOException, InterruptedException {
 //        HttpClient client = HttpClient.newHttpClient();
 //
@@ -113,20 +138,13 @@ public class Teste {
 //                HttpResponse.BodyHandlers.ofString());
 //
 //        System.out.println(response.body());
-        
-        
-        
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-              .uri(URI.create("https://uniciv.myedools.com/" + "/json/"))
-              .build();
-        client.sendAsync(request, BodyHandlers.ofString())
-              .thenApply(HttpResponse::body)
-              .thenAccept(System.out::println)
-              .join();
-        
 
-        
-    }
+		HttpClient client = HttpClient.newHttpClient();
+		HttpRequest request = HttpRequest.newBuilder().uri(URI.create("https://uniciv.myedools.com/" + "/json/"))
+				.build();
+		client.sendAsync(request, BodyHandlers.ofString()).thenApply(HttpResponse::body).thenAccept(System.out::println)
+				.join();
+
+	}
 
 }

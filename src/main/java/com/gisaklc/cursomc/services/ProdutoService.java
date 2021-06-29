@@ -20,24 +20,21 @@ public class ProdutoService {
 
 	@Autowired
 	private ProdutoRepository repo;
-	
+
 	@Autowired
 	private CategoriaRepository repoCategoria;
-	
+
 	public Produto find(Integer id) {
 		Optional<Produto> obj = repo.findById(id);
 		return obj.orElseThrow(
 				() -> new ObjectNotFound("Objeto não encontrado! Id: " + id + ", Tipo: " + Produto.class.getName()));
 	}
 
-	
-	public Page<Produto> search(String nome, List<Integer> ids, Integer page, Integer linesForPage, String orderBy, String direction) {
-		PageRequest pageRequest = PageRequest.of(page, linesForPage, Direction.valueOf(direction), orderBy) ;
+	public Page<Produto> search(String nome, List<Integer> ids, Integer page, Integer linesForPage, String orderBy,
+			String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesForPage, Direction.valueOf(direction), orderBy);
 		List<Categoria> lista = repoCategoria.findAllById(ids);
 		return repo.findDistinctByNomeContainingAndCategoriasIn(nome, lista, pageRequest);
 	}
 
-
-	
-	
 }
