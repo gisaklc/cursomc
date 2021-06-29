@@ -10,12 +10,15 @@ import org.springframework.context.annotation.Profile;
 import com.gisaklc.cursomc.services.DbService;
 
 @Configuration
-@Profile("test")
-public class TestConfig {
+@Profile("dev")
+public class DevConfig {
 
 	@Autowired
 	private DbService dbService;
 
+	@Value(="${spring.jpa.hibernate.ddl-auto=create}")
+	private String strategy;
+	
 	// metodo responsavel por instanciar o bd no profile test
 	@Bean
 	public boolean instantiateDatabase() throws ParseException {
