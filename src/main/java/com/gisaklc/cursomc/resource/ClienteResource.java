@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.gisaklc.cursomc.domain.Categoria;
 import com.gisaklc.cursomc.domain.Cliente;
 import com.gisaklc.cursomc.dto.ClienteDTO;
 import com.gisaklc.cursomc.dto.ClienteNewDTO;

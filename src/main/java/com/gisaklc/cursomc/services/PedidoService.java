@@ -3,6 +3,8 @@ package com.gisaklc.cursomc.services;
 import java.util.Date;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,25 +39,24 @@ public class PedidoService {
 
 	@Autowired
 	private ClienteService clienteService;
-	
+
 	@Autowired
 	private ProdutoService produtoService;
-	
-	
+
 	public Pedido find(Integer id) {
 		Optional<Pedido> obj = pedidoRepository.findById(id);
 		return obj.orElseThrow(
 				() -> new ObjectNotFound("Objeto não encontrado! Id: " + id + ", Tipo: " + Pedido.class.getName()));
 	}
 
+	@Transactional
 	public Pedido insert(Pedido obj) {
 		obj.setId(null);
 		obj.setInstante(new Date());
 		obj.getPagamento().setEstadoPagamento(EstadoPagamento.PENDENTE);
 		obj.getPagamento().setPedido(obj);
 		obj.setCliente(clienteService.find(obj.getCliente().getId()));
-	
-		
+
 		PagamentoComBoleto pb = new PagamentoComBoleto();
 		pb.setDataPagamento(new Date());
 		pb.setDataVencimento(new Date());
@@ -72,18 +73,18 @@ public class PedidoService {
 
 		for (ItemPedido itemPedido : obj.getItens()) {
 			itemPedido.setDesconto(0);
-			//itemPedido.setProduto(produtoService.find(itemPedido.getProduto().getId()));
-			itemPedido.setProduto(produtoRepositoy.findById(itemPedido.getProduto().getId()).orElse(null));
+			itemPedido.setProduto(produtoService.find(itemPedido.getProduto().getId()));
+			// itemPedido.setProduto(produtoRepositoy.findById(itemPedido.getProduto().getId()).orElse(null));
 			// recupera o produto e pega o preco do produto e copia para o preco do item
 			itemPedido.setPreco(itemPedido.getProduto().getPreco());
-			//seta o pedido no item
+			// seta o pedido no item
 			itemPedido.setPedido(obj);
 
 		}
-		
+
 		// salva os itens do pedido
 		itemPedidoRepositoy.saveAll(obj.getItens());
-
+		System.out.println(obj);//chama o toString
 		return obj;
 	}
 
