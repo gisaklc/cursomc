@@ -12,12 +12,16 @@ import com.gisaklc.cursomc.domain.ItemPedido;
 import com.gisaklc.cursomc.domain.PagamentoComBoleto;
 import com.gisaklc.cursomc.domain.Pedido;
 import com.gisaklc.cursomc.domain.enums.EstadoPagamento;
-import com.gisaklc.cursomc.repositories.ClienteRepository;
 import com.gisaklc.cursomc.repositories.ItemPedidoRespository;
 import com.gisaklc.cursomc.repositories.PagamentoRespository;
 import com.gisaklc.cursomc.repositories.PedidoRepository;
 import com.gisaklc.cursomc.repositories.ProdutoRepository;
 import com.gisaklc.cursomc.services.exceptions.ObjectNotFound;
+
+/** Ao chamar o sendEmail a Interface EmailService não sabe qual objeto instanciar
+ * com isso foi criado um metodo que é anotado 
+ * com @Bean que é um "componente" na classe TestConfig pra instanciar 
+ * correspondente o objeto automaticamente   **/
 
 @Service
 public class PedidoService {
@@ -42,7 +46,10 @@ public class PedidoService {
 
 	@Autowired
 	private ProdutoService produtoService;
-
+	
+	@Autowired
+	private EmailService emailService;
+	
 	public Pedido find(Integer id) {
 		Optional<Pedido> obj = pedidoRepository.findById(id);
 		return obj.orElseThrow(
@@ -84,7 +91,10 @@ public class PedidoService {
 
 		// salva os itens do pedido
 		itemPedidoRepositoy.saveAll(obj.getItens());
-		System.out.println(obj);//chama o toString
+		
+		emailService.sendOrderEmailConfirmation(obj);
+		
+	//	System.out.println(obj);//chama o toString
 		return obj;
 	}
 
