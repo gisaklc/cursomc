@@ -11,6 +11,11 @@ import com.gisaklc.cursomc.services.DbService;
 import com.gisaklc.cursomc.services.EmailService;
 import com.gisaklc.cursomc.services.MockEmailService;
 
+/** 
+ * o properties tes usa o bd H2
+ *
+ * **/
+
 @Configuration
 @Profile("test")
 public class TestConfig {

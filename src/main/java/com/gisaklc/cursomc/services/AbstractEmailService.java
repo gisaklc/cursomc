@@ -9,7 +9,8 @@ import com.gisaklc.cursomc.domain.Pedido;
 
 /**
  * A classe abstrata criada nao está implementando os dois métodos ao usar o
- * implements mas ao criar a classe filha tem q implementar.
+ * implements mas ao criar a primeira  classe  não abstrata que extender
+ * a classe AbstractEmailService tem q implementar.
  * 
  * 
  * o protected para que seja acessado pelas subclasses e não pelos usuarios da

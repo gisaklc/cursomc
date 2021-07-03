@@ -1,0 +1,33 @@
+package com.gisaklc.cursomc.services;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
+
+
+/** MailSender instancia o objeto com todos os dados do email 
+ * declarado no properties.dev /*
+ * @author gisak
+ *
+ */
+
+public class SmtpEmailService extends AbstractEmailService {
+
+	@Autowired
+	private MailSender mailSender;
+	
+
+	private static final Logger LOG = LoggerFactory.getLogger(MockEmailService.class);
+
+	
+	@Override
+	public void sendEmail(SimpleMailMessage msg) {
+		LOG.info("Enviando email");
+		mailSender.send(msg);
+		LOG.info("Email enviado");
+		
+	}
+
+}
