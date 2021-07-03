@@ -15,13 +15,14 @@ import com.gisaklc.cursomc.domain.enums.EstadoPagamento;
 import com.gisaklc.cursomc.repositories.ItemPedidoRespository;
 import com.gisaklc.cursomc.repositories.PagamentoRespository;
 import com.gisaklc.cursomc.repositories.PedidoRepository;
-import com.gisaklc.cursomc.repositories.ProdutoRepository;
 import com.gisaklc.cursomc.services.exceptions.ObjectNotFound;
 
-/** Ao chamar o sendEmail a Interface EmailService não sabe qual objeto instanciar
- * com isso foi criado um metodo que é anotado 
- * com @Bean que é um "componente" na classe TestConfig pra instanciar 
- * correspondente o objeto automaticamente   **/
+/**
+ * Ao chamar o sendEmail a Interface EmailService não sabe qual objeto
+ * instanciar com isso foi criado um metodo que é anotado com @Bean que é um
+ * "componente" na classe TestConfig pra instanciar correspondente o objeto
+ * automaticamente
+ **/
 
 @Service
 public class PedidoService {
@@ -36,9 +37,6 @@ public class PedidoService {
 	private PagamentoRespository pagamentoRepositoy;
 
 	@Autowired
-	private ProdutoRepository produtoRepositoy;
-
-	@Autowired
 	private ItemPedidoRespository itemPedidoRepositoy;
 
 	@Autowired
@@ -46,10 +44,10 @@ public class PedidoService {
 
 	@Autowired
 	private ProdutoService produtoService;
-	
+
 	@Autowired
 	private EmailService emailService;
-	
+
 	public Pedido find(Integer id) {
 		Optional<Pedido> obj = pedidoRepository.findById(id);
 		return obj.orElseThrow(
@@ -91,10 +89,14 @@ public class PedidoService {
 
 		// salva os itens do pedido
 		itemPedidoRepositoy.saveAll(obj.getItens());
+
+		// System.out.println(obj);//chama o toString
 		
-		emailService.sendOrderEmailConfirmation(obj);
+		//envio email sem html
+		//emailService.sendOrderEmailConfirmation(obj);
 		
-	//	System.out.println(obj);//chama o toString
+		//envio email com html
+		emailService.sendOrderConfirmationHtmlEmail(obj);
 		return obj;
 	}
 
