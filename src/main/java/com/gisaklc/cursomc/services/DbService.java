@@ -20,6 +20,7 @@ import com.gisaklc.cursomc.domain.PagamentoComCartao;
 import com.gisaklc.cursomc.domain.Pedido;
 import com.gisaklc.cursomc.domain.Produto;
 import com.gisaklc.cursomc.domain.enums.EstadoPagamento;
+import com.gisaklc.cursomc.domain.enums.Perfil;
 import com.gisaklc.cursomc.domain.enums.TipoCliente;
 import com.gisaklc.cursomc.repositories.CategoriaRepository;
 import com.gisaklc.cursomc.repositories.CidadeRepository;
@@ -141,16 +142,32 @@ public class DbService {
 		Cliente cli1 = new Cliente(null, "Gisele Dias", "gisaklc@hotmail.com", "12119663726",
 				TipoCliente.PESSOAFISICA, bCryptPasswordEncoder.encode("123456"));
 
-		cli1.getTelefones().addAll(Arrays.asList("2197265825", "982353652"));// adiciona os telefones do cliente
+		cli1.getTelefones().addAll(Arrays.asList("2197265825", "21982353652"));// adiciona os telefones do cliente 1
 
+		
+		Cliente cli2 = new Cliente(null, "Carol Dias", "carol@hotmail.com", "792.260.950-78",
+				TipoCliente.PESSOAFISICA, bCryptPasswordEncoder.encode("123456"));
+
+		cli2.addPerfil(Perfil.ADMIN);
+		
+		cli2.getTelefones().addAll(Arrays.asList("21975648965", "2196356253"));// adiciona os telefones do cliente 2
+		
+		
 		Endereco end1 = new Endereco(null, "Rua sei la", "2", "beira linha", "Jardim A", "209402020", cli1, c1);
 		Endereco end2 = new Endereco(null, "Rua Toma la da cá", "2", "Buraco do boi", "A sorte é sua", "20202232", cli1,
 				c3);
+		
+		Endereco end3 = new Endereco(null, "Rua Rita Noêmia da Costa", "110", "Bosque do Cambucás", "Jardim Itamonte", "25945388", cli2,
+				c3);
+		
 		// esse cliente tem dois enderecos
-		cli1.getEnderecos().addAll(Arrays.asList(end1, end2));// adiciona os enderecos do cliente
+		cli1.getEnderecos().addAll(Arrays.asList(end1, end2));// adiciona os enderecos do cliente 1
 
-		clienteRepository.saveAll(Arrays.asList(cli1));
-		enderecoRepository.saveAll(Arrays.asList(end1, end2));
+		// esse cliente tem dois enderecos
+		cli2.getEnderecos().addAll(Arrays.asList(end3));// adiciona os enderecos do cliente 2
+		
+		clienteRepository.saveAll(Arrays.asList(cli1, cli2));
+		enderecoRepository.saveAll(Arrays.asList(end1, end2, end3));
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
 
