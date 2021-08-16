@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -21,18 +21,11 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	// arry com os endpoint liberados para acesso
-	private static final String[] PUBLIC_MATCHERS = 
-		{
-		  "/h2-console/**"
-		};
+	private static final String[] PUBLIC_MATCHERS = { "/h2-console/**" };
 
 	// arry com os endpoint liberados para acesso
-	private static final String[] PUBLIC_MATCHERS_GET = 
-		{ "/produtos/**",
-		  "/categorias/**" 
-		};
-	
-	
+	private static final String[] PUBLIC_MATCHERS_GET = { "/produtos/**", "/categorias/**" };
+
 	@Autowired
 	private Environment env;
 
@@ -40,14 +33,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
-			http.headers().frameOptions().disable();//liberar o acesso ao H2 de teste
+			http.headers().frameOptions().disable();// liberar o acesso ao H2 de teste
 		}
 
 		http.cors().and().csrf().disable();// para ativar o bean abaixo
-		http.authorizeRequests()
-		.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll() // permite os endpoint do vetor
-		.antMatchers(PUBLIC_MATCHERS).permitAll()
-				.anyRequest().authenticated(); // exige autenticacao para os restantes
+		http.authorizeRequests().antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll() // permite os endpoint do
+																								// vetor
+				.antMatchers(PUBLIC_MATCHERS).permitAll().anyRequest().authenticated(); // exige autenticacao para os
+																						// restantes
 
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);// nao cria sessão do usuario
 	}
@@ -60,4 +53,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
 		return source;
 	}
+
+	//para aplicar algoritmo de encode e poder injetar em qualquer classe do sistema
+	@Bean
+	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
 }

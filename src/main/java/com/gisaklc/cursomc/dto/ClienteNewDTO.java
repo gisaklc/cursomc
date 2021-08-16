@@ -13,37 +13,40 @@ public class ClienteNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
-	
+
 	@NotEmpty(message = "Nome é obrigatório")
 	@Size(min = 5, max = 120, message = "O nome deve conter entre  5 e 120 caracteres ")
 	private String nome;
-	
+
 	private String cpfOuCnpj;
-	
+
 	@NotEmpty(message = "Email é obrigatório")
 	@Email(message = "Email inválido")
 	private String email;
 
 	private Integer tipoClienteEnum;
+	
+	@NotEmpty(message = "Senha é obrigatório")
+	private String senha;
 
 	@NotEmpty(message = "Logradouro é obrigatório")
 	private String logradouro;
-	
+
 	@NotEmpty(message = "Numero é obrigatório")
 	private String numero;
-	
+
 	private String complemento;
 
 	private String bairro;
-	
+
 	@NotEmpty(message = "Cep é obrigatório")
 	private String cep;
-	
+
 	@NotEmpty(message = "Telefone1 é obrigatório")
 	private String telefone1;
-	
+
 	private String telefone2;
-	
+
 	private String telefone3;
 
 	private Integer cidadeId;
@@ -90,6 +93,14 @@ public class ClienteNewDTO implements Serializable {
 
 	public void setTipoClienteEnum(Integer tipoClienteEnum) {
 		this.tipoClienteEnum = tipoClienteEnum;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	public String getLogradouro() {
