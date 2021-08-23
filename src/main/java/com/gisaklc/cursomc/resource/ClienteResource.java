@@ -32,7 +32,6 @@ public class ClienteResource {
 	@Autowired
 	private ClienteService service;
 	
-	@PreAuthorize("hasAnyRole('ADMIN')") // somente quem estiver autenticado como ADMIN terá acesso
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Cliente> find(@PathVariable Integer id) throws ObjectNotFoundException {
 		Cliente cliente = service.find(id);
@@ -57,14 +56,15 @@ public class ClienteResource {
 		return ResponseEntity.noContent().build();
 
 	}
-
+	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 
 	}
-
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<ClienteDTO>> findAll() {
 		List<Cliente> list = service.findAll();
@@ -73,7 +73,8 @@ public class ClienteResource {
 		return ResponseEntity.ok().body(listDto);
 
 	}
-
+	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "page", method = RequestMethod.GET)
 	public ResponseEntity<Page<ClienteDTO>> findAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "linesForPage", defaultValue = "24") Integer linesForPage,
