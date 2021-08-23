@@ -34,7 +34,8 @@ public class JWTUtil {
 	}
 	
 	public boolean tokenValido(String token) {
-		Claims claims = getClaims(token);
+		/****/
+		Claims claims = getClaims(token);//tipo do jwt alega q é o usario e tempo de expiracao é tal
 		if (claims != null) {
 			String username = claims.getSubject();
 			Date expirationDate = claims.getExpiration();
