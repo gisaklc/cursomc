@@ -12,9 +12,9 @@ import com.gisaklc.cursomc.domain.enums.Perfil;
 
 /**
  * Contrato do spring Security para trabalhar com usuario...
-**/
-public class UserSS implements UserDetails{
-	
+ **/
+public class UserSS implements UserDetails {
+
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
@@ -31,7 +31,7 @@ public class UserSS implements UserDetails{
 		this.email = email;
 		this.senha = senha;
 		this.authorities = perfis.stream().map(x -> new SimpleGrantedAuthority(x.getDescricao()))
-				.collect(Collectors.toList());//busca os perfis e converte para a lsta de authorities
+				.collect(Collectors.toList());// busca os perfis e converte para a lsta de authorities
 	}
 
 	public Integer getId() {
@@ -74,6 +74,7 @@ public class UserSS implements UserDetails{
 	}
 
 	public boolean hasRole(Perfil perfil) {
+
 		return getAuthorities().contains(new SimpleGrantedAuthority(perfil.getDescricao()));
 	}
 

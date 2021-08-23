@@ -17,12 +17,15 @@ import org.springframework.stereotype.Service;
 import com.gisaklc.cursomc.domain.Cidade;
 import com.gisaklc.cursomc.domain.Cliente;
 import com.gisaklc.cursomc.domain.Endereco;
+import com.gisaklc.cursomc.domain.enums.Perfil;
 import com.gisaklc.cursomc.domain.enums.TipoCliente;
 import com.gisaklc.cursomc.dto.ClienteDTO;
 import com.gisaklc.cursomc.dto.ClienteNewDTO;
 import com.gisaklc.cursomc.repositories.CidadeRepository;
 import com.gisaklc.cursomc.repositories.ClienteRepository;
 import com.gisaklc.cursomc.repositories.EnderecoRepository;
+import com.gisaklc.cursomc.resource.exception.AuthorizationException;
+import com.gisaklc.cursomc.security.UserSS;
 import com.gisaklc.cursomc.services.exceptions.DataIntegrityException;
 import com.gisaklc.cursomc.services.exceptions.ObjectNotFound;
 
@@ -40,8 +43,16 @@ public class ClienteService {
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+
 	public Cliente find(Integer id) {
+		//recupera o usuario logado
+		//restringindo o acesso por usuario
+		UserSS user = UserService.authenticated();
+		if (user == null || !user.hasRole(Perfil.ADMIN) 
+				&& !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+
 		Optional<Cliente> obj = repo.findById(id);
 		return obj.orElseThrow(
 				() -> new ObjectNotFound("Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
@@ -101,9 +112,9 @@ public class ClienteService {
 		Endereco end = new Endereco(null, obj.getLogradouro(), obj.getNumero(), obj.getComplemento(), obj.getBairro(),
 				obj.getCep(), cli, cidade.get());
 
-		Endereco end2 = new Endereco(null, "Rua dos Anjos", "2", obj.getComplemento(), obj.getBairro(),
-				obj.getCep(), cli, cidade.get());
-		
+		Endereco end2 = new Endereco(null, "Rua dos Anjos", "2", obj.getComplemento(), obj.getBairro(), obj.getCep(),
+				cli, cidade.get());
+
 		cli.getEnderecos().addAll(Arrays.asList(end, end2));
 
 		cli.getTelefones().add(obj.getTelefone1());
@@ -119,4 +130,5 @@ public class ClienteService {
 		}
 		return cli;
 	}
+
 }
