@@ -3,11 +3,14 @@ package com.gisaklc.cursomc.services;
 import java.util.Date;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.gisaklc.cursomc.domain.Cliente;
 import com.gisaklc.cursomc.domain.ItemPedido;
 import com.gisaklc.cursomc.domain.PagamentoComBoleto;
 import com.gisaklc.cursomc.domain.Pedido;
@@ -15,7 +18,10 @@ import com.gisaklc.cursomc.domain.enums.EstadoPagamento;
 import com.gisaklc.cursomc.repositories.ItemPedidoRespository;
 import com.gisaklc.cursomc.repositories.PagamentoRespository;
 import com.gisaklc.cursomc.repositories.PedidoRepository;
+import com.gisaklc.cursomc.resource.exception.AuthorizationException;
+import com.gisaklc.cursomc.security.UserSS;
 import com.gisaklc.cursomc.services.exceptions.ObjectNotFound;
+
 
 /**
  * Ao chamar o sendEmail a Interface EmailService não sabe qual objeto
@@ -99,5 +105,17 @@ public class PedidoService {
 		emailService.sendOrderConfirmationHtmlEmail(obj);
 		return obj;
 	}
+	
+	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		UserSS user = UserService.authenticated();
+		if (user == null) {//ser for null pq nao está autenciado
+			throw new AuthorizationException("Acesso negado");
+		}
+		//retorna somente os pedidos dos clientes estão logados
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Cliente cliente =  clienteService.find(user.getId());
+		return pedidoRepository.findByCliente(cliente, pageRequest);
+	}
+	
 
 }
