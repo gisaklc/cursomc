@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +31,8 @@ public class ClienteResource {
 
 	@Autowired
 	private ClienteService service;
-
+	
+	@PreAuthorize("hasAnyRole('ADMIN')") // somente quem estiver autenticado como ADMIN terá acesso
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Cliente> find(@PathVariable Integer id) throws ObjectNotFoundException {
 		Cliente cliente = service.find(id);
