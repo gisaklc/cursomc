@@ -51,6 +51,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			CredenciaisDTO creds = new ObjectMapper().readValue(req.getInputStream(), CredenciaisDTO.class);
 
 			UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(creds.getEmail(),
+
 					creds.getSenha(), new ArrayList<>());
 
 			//ESSE METODO QUE VERIFICA SE OS USUARIO E SENHA SAO VALIDOS 
