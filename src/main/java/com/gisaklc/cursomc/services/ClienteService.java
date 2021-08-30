@@ -54,7 +54,6 @@ public class ClienteService {
 	@Autowired
 	private ImageService imageService;
 
-
 	public Cliente find(Integer id) {
 		// recupera o usuario logado
 		// restringindo o acesso por usuario
@@ -141,24 +140,32 @@ public class ClienteService {
 		return cli;
 	}
 
-	public URI uploadProfilePicture(MultipartFile multipartFile) throws IOException {
-		return s3Service.uploadFile(multipartFile);
-	}
-
-//	public URI uploadProfilePicture(MultipartFile multipartFile) {
-//	
-//		UserSS user = UserService.authenticated();
-//		
-//		if (user == null) {
-//			throw new AuthorizationException("Acesso negado");
-//		}
-//
-//		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
-//	//	jpgImage = imageService.cropSquare(jpgImage);
-//	//	jpgImage = imageService.resize(jpgImage, size);
-//
-//		String fileName = prefix + user.getId() + ".jpg";
-//
-//		return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
+//	public URI uploadProfilePicture(MultipartFile multipartFile) throws IOException {
+//		return s3Service.uploadFile(multipartFile);
 //	}
+
+	public URI uploadProfilePicture(MultipartFile multipartFile) throws IOException {
+
+		UserSS user = UserService.authenticated();
+
+		if (user == null) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		URI uri = s3Service.uploadFile(multipartFile);
+		//pega o cliente 
+		Optional<Cliente> cliente = repo.findById(user.getId());
+		cliente.get().setImageUrl(uri.toString());
+		//salva a uri do cliente no bd
+		repo.save(cliente.get());
+
+		// BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+		// jpgImage = imageService.cropSquare(jpgImage);
+		// jpgImage = imageService.resize(jpgImage, size);
+
+		// String fileName = prefix + user.getId() + ".jpg";
+
+		return uri;
+		// s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName,
+		// "image");
+	}
 }
