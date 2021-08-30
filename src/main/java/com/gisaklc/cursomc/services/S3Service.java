@@ -48,25 +48,28 @@ public class S3Service {
 
 	}
 
+	// Multiport tipo do spring o arquivo q vem da requisicao
+	// URI o endereco Web do novo recurso q foi enviado
 	public URI uploadFile(MultipartFile multipartFile) throws IOException {
 		try {
-			String fileName = multipartFile.getOriginalFilename();
-			InputStream is = multipartFile.getInputStream();
-			String contentType = multipartFile.getContentType();
+			String fileName = multipartFile.getOriginalFilename();// extrai o nome do arquivo enviado
+			InputStream is = multipartFile.getInputStream();// obj de Read do java io q encapsula o proc de leitura a partir da origem
+			String contentType = multipartFile.getContentType();// inf fo tipo do arquivo enviado
 			return uploadFile(is, fileName, contentType);
 		} catch (AmazonServiceException e) {
 			throw new FileException("Erro de IO: " + e.getMessage());
 		}
 	}
 
+//metodo sobrecarregado com outros parametros
 	public URI uploadFile(InputStream is, String fileName, String contentType) {
 		try {
-			ObjectMetadata meta = new ObjectMetadata();
+			ObjectMetadata meta = new ObjectMetadata();//da biblioteca da Amazon
 			meta.setContentType(contentType);
 			LOG.info("Iniciando upload");
 			s3client.putObject(bucketName, fileName, is, meta);
 			LOG.info("Upload finalizado");
-			return s3client.getUrl(bucketName, fileName).toURI();
+			return s3client.getUrl(bucketName, fileName).toURI();//converte para URI
 		} catch (URISyntaxException e) {
 			throw new FileException("Erro ao converter URL para URI");
 		}
