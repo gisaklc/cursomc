@@ -146,12 +146,12 @@ public class ClienteService {
 		return cli;
 	}
 
-	/** v1
+	/** v1 devolve a uri da imagem
 	public URI uploadProfilePicture(MultipartFile multipartFile) throws IOException {
 		return s3Service.uploadFile(multipartFile);
 	} **/
 
-	/** v2
+	/** v2 salva a imagem no banco
 	public URI uploadProfilePicture(MultipartFile multipartFile) throws IOException {
 		UserSS user = UserService.authenticated();
 		if (user == null) {
@@ -164,6 +164,7 @@ public class ClienteService {
 		return uri;
 	} **/
 
+	//v3 cortando e redimensionando a imagem
 	public URI uploadProfilePicture(MultipartFile multipartFile) throws IOException {
 
 		UserSS user = UserService.authenticated();
@@ -171,10 +172,10 @@ public class ClienteService {
 		if (user == null) {
 			throw new AuthorizationException("Acesso negado");
 		}
-
+		//padrao de nomes para imagem
 		 BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
-		// jpgImage = imageService.cropSquare(jpgImage);
-	//	 jpgImage = imageService.resize(jpgImage, size);
+		 jpgImage = imageService.cropSquare(jpgImage);//recorta a imagem pra quadrada
+	   	 jpgImage = imageService.resize(jpgImage, size);//redimensiona pelo tam definido no properties
 
 		 String fileName = prefix + user.getId() + ".jpg";
 
