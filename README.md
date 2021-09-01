@@ -1,7 +1,7 @@
 
 # Spring Boot, Hibernate, REST, JWT, S3, MySQL e MongoDb...
 
-Conteúdo abordados no curso:
+Tópicos abordados:
 
 Implementar modelos de domínio<br>
 Mapeamento objeto-relacional com JPA <br>
